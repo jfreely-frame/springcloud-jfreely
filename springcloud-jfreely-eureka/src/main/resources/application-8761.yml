@@ -2,13 +2,13 @@ server:
   port: 8761
 eureka:
   instance:
-    hostname: localhost
+    hostname: 192.168.10.198
     #appname: eureka-server
   client:
-    registerWithEureka: false #是否注册到eureka服务器
-    fetchRegistry: false #是否从eureka服务端获取注册信息
+    register-with-eureka: true #是否注册到eureka服务器
+    fetch-registry: true #是否从eureka服务端获取注册信息
     serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: http://192.168.10.198:8761/eureka/,http://192.168.10.160:8762/eureka/,http://192.168.10.160:8763/eureka/
     eureka-connection-idle-timeout-seconds: 30 #Eureka服务端连接的空闲关闭时间
     eureka-server-total-connections: 200 #从Eureka客户端到所有Eureka服务端的连接总数
     eureka-server-total-connections-per-host: 50 #从Eureka客户端到每个Eureka服务端的连接总数

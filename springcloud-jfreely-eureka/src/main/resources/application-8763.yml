@@ -1,0 +1,22 @@
+server:
+  port: 8763
+eureka:
+  instance:
+    hostname: localhost
+    #appname: eureka-server
+  client:
+    register-with-eureka: true #是否注册到eureka服务器
+    fetch-registry: true #是否从eureka服务端获取注册信息
+    serviceUrl:
+      defaultZone: http://192.168.10.198:8761/eureka/,http://192.168.10.160:8762/eureka/,http://192.168.10.160:8763/eureka/
+    eureka-connection-idle-timeout-seconds: 30 #Eureka服务端连接的空闲关闭时间
+    eureka-server-total-connections: 200 #从Eureka客户端到所有Eureka服务端的连接总数
+    eureka-server-total-connections-per-host: 50 #从Eureka客户端到每个Eureka服务端的连接总数
+    eureka-server-connect-timeout-seconds: 60  #连接Eureka server的超时时间  默认 5
+    eureka-server-read-timeout-seconds: 60 #读取eureka server 信息的超时时间 默认 8
+  server:
+    enable-self-preservation: false #关闭自我保护模式,建议在本地测试环境中开启
+    eviction-interval-timer-in-ms: 1000 # 续期时间，即扫描失效服务的间隔时间（缺省为60*1000ms）
+  #dashboard: 
+    #enabled: true
+    #path: /eureka-server

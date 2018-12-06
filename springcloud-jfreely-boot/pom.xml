@@ -7,4 +7,11 @@
   </parent>
   <artifactId>springcloud-jfreely-boot</artifactId>
   <description>启动文件</description>
+  <dependencies>
+  	<dependency>
+  		<groupId>org.springcloud.jfreely</groupId>
+  		<artifactId>springcloud-jfreely-core</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
 </project>

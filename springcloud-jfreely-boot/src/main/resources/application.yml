@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: jfreely-client1
+server: 
+  port: 9908
+eureka:
+  client: 
+      healthcheck: 
+         enabled: true
+      serviceUrl:
+         defaultZone: http://192.168.10.160:8762/eureka/
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 15
+    instance-id: ${spring.application.name}:${random.int}
+feign: 
+    hystrix: 
+      enabled: true  #是否开启fegin的hystrix
+hystrix: 
+  command: 
+    default: 
+      execution: 
+        isolation: 
+          thread: 
+            timeoutInMilliseconds: 5000  #设置熔断器默认超时时间        
+#hystrix.command.default.execution.timeout.enabled: false #用于禁用Hystrix的超时时间          
