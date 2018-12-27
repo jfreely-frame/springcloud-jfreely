@@ -1,6 +1,40 @@
 spring:
   application:
     name: jfreely-gateway
+  cloud:
+    gateway:
+      discovery: 
+        locator: 
+          enabled: true #是否与服务发现组件进行结合，通过 serviceId 转发到具体的服务实例。默认为false，设为true便开启通过服务中心的自动根据 serviceId 创建路由的功能。
+          lower-case-service-id: true
+    default-filters: 
+      - AddResponseHeader=X-Response-Default-Foo, Default-Bar
+      - name: RequestRateLimiter
+        args:
+          redis-rate-limiter.replenishRate: 1  #令牌桶的容积
+          redis-rate-limiter.burstCapacity: 1  #流速 每秒
+          rate-limiter: "#{@defaultRedisRateLimiter}"  #SPEL表达式去的对应的bean
+          key-resolver: "#{@remoteAddressKeyResolver}" #SPEL表达式去的对应的bean
+    routes: 
+      - id: authorization-server
+        uri: lb://authorization-server
+        predicates:
+        - Path=/authorization-server/**
+        filters:
+        - PrefixPath=/test-server
+        - StripPrefix=2
+        - AddResponseHeader=foo, bar
+        - name: Retry
+          args:
+            retries: 3
+            statuses: BAD_GATEWAY
+logging:
+  level:
+    org.springframework.cloud.gateway: trace
+    org.springframework.http.server.reactive: debug
+    org.springframework.web.reactive: debug
+    reactor.ipc.netty: debug   
+      
 server: 
   port: 8888
 eureka:
